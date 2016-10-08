@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{A1511692-0162-C6DA-B00F-434DB0198A87}") = "unity_shader", "Assembly-CSharp.csproj", "{2757596A-779E-B26B-EF12-8E6503ADADDD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2757596A-779E-B26B-EF12-8E6503ADADDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2757596A-779E-B26B-EF12-8E6503ADADDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2757596A-779E-B26B-EF12-8E6503ADADDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2757596A-779E-B26B-EF12-8E6503ADADDD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
