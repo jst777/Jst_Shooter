@@ -11,7 +11,7 @@
     SubShader {
        Tags { "Queue" = "Transparent"}
        Pass{
-        //Blend SrcAlpha OneMinusSrcAlpha    //블랜드 옵션이 추가되었습니다. 
+        Blend SrcAlpha OneMinusSrcAlpha    //블랜드 옵션이 추가되었습니다. 
          
             Material {
                 Diffuse [_Color]
