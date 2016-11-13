@@ -60,7 +60,7 @@ public class UIMgr : MonoBehaviour {
 		buttonList.Add ("RightButton");
 		buttonList.Add ("LeftRotateButton");
 		buttonList.Add ("RightRotateButton");
-		buttonList.Add ("FireButton");
+		//buttonList.Add ("FireButton");
 
 		foreach (string buttonName in buttonList) {
 			GameObject buttonObj = GameObject.Find (buttonName);
@@ -159,10 +159,10 @@ public class UIMgr : MonoBehaviour {
 	public void OnGameRetryButton()
 	{
 		GameMgr gameMgr = GameObject.Find ("Camera").GetComponent<GameMgr> ();
-		if (gameMgr) {
-			PlayerPrefs.SetInt ("COLUM_COUNT", 0);
-			PlayerPrefs.SetInt ("STAGE_COUNT", 1);
-		}
+		//if (gameMgr) {
+			//PlayerPrefs.SetInt ("COLUM_COUNT", 0);
+			//PlayerPrefs.SetInt ("STAGE_COUNT", 1);
+		//}
 
 		SceneManager.LoadScene ("JstScene");
 	}

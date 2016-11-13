@@ -24,6 +24,9 @@ public class PlayerCtrl : MonoBehaviour {
 			if (healthBar != null) {
 				healthBar.currHealth -= 1;
 
+				//device vibrate when hp down
+				Handheld.Vibrate ();
+
 				if (healthBar.currHealth <= 0) {
 					//unactivated object can't found in gameobject.find
 					//so i found that in uimgr

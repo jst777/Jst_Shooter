@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class MainMenuUI : MonoBehaviour {
 	public InputField stageInputField;
+	public InputField chatInputField;
+	public Text	chatText;
+
 
 	// Use this for initialization
 	void Start () {
@@ -44,5 +47,19 @@ public class MainMenuUI : MonoBehaviour {
 	{
 		PlayerPrefs.SetInt ("STAGE_COUNT", 1);
 		SceneManager.LoadScene ("JstScene");
+	}
+
+	public void OnClickChatButton()
+	{
+		ServerManager mgr = Camera.main.GetComponent<ServerManager> ();
+		mgr.EmitChat ("jst", chatInputField.text, System.DateTime.Now);
+
+		//chatText.text += chatInputField.text + "\n";
+		//chatText.text = "hello \n hi \n hello there \n";
+	}
+
+	public void AddChatText(string name, string msg, string date)
+	{
+		chatText.text += "[" + name + "]  "  + msg + "\n";
 	}
 }

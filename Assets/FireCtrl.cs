@@ -8,8 +8,17 @@ public class FireCtrl : MonoBehaviour {
 	// Use this for initialization
 	public float fireTerm = 0.3f;
 
+	private LaserBeam laser = null;
+	public bool stopFire {
+		get;
+		set;
+
+	}
+
 	void Start () {
 		StartCoroutine (FireCoroutine());
+		 laser = GetComponentInChildren<LaserBeam> ();
+		stopFire = false;
 	}
 	
 	// Update is called once per frame
@@ -20,8 +29,15 @@ public class FireCtrl : MonoBehaviour {
 	{
 		while (true) {
 			yield return new WaitForSeconds (fireTerm);
-
-			Fire ();
+			if (stopFire)
+				break;
+			if (laser != null) {
+				if (!laser.IsLaserVisible ()) {
+					Fire ();
+				}
+			}
+			else
+				Fire ();
 		}
 	}
 
@@ -33,5 +49,13 @@ public class FireCtrl : MonoBehaviour {
 	{
 		GameObject bulletObj = Instantiate (bullet, firePos.position, firePos.rotation);
 		bulletObj.GetComponent<BulletCtrl> ().AddForce = true;
+	}
+
+	public void FireLaserBeam()
+	{
+		
+		if (laser != null) {
+			laser.FireLaserBeam ();
+		}
 	}
 }

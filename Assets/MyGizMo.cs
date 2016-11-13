@@ -16,6 +16,7 @@ public class MyGizMo : MonoBehaviour {
 	}
 	void OnDrawGizMos(){
 		Gizmos.color = _color;
-		Gizmos.DrawSphere (transform.position, _radius);
+		Gizmos.DrawWireSphere(transform.position, _radius);
+		Debug.Log ("OnDrawGizMos");
 	}
 }

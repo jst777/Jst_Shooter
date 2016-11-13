@@ -18,10 +18,10 @@ public class GameMgr : MonoBehaviour {
 		get;set;
 	}
 
-	public int currentStage {
-		get;
-		set;
-	}
+	public int currentStage = 1;// {
+	//	get;
+	//	set;
+	//}
 
 	public static GameMgr instance = null;
 
@@ -48,12 +48,12 @@ public class GameMgr : MonoBehaviour {
 			columnCount = columnCountPref;
 		}
 
-		currentStage = 1;
-		int stageCountRef = PlayerPrefs.GetInt ("STAGE_COUNT");
-		if (stageCountRef > 0) {
-			currentStage = stageCountRef;
-		}
-
+			currentStage = 1;
+			int stageCountRef = PlayerPrefs.GetInt ("STAGE_COUNT");
+			if (stageCountRef > 0) {
+				currentStage = stageCountRef;
+			}
+		
 		int checkStage = currentStage / (int)EnemyFire.eFireType.eMaxFireType;
 		currentStep = 1;
 		columnCount = 1 + checkStage;
@@ -86,6 +86,20 @@ public class GameMgr : MonoBehaviour {
 
 					}
 					uiMgr.stageClear.SetActive (true);
+
+
+					CameraControl camControl = Camera.main.GetComponent<CameraControl> ();
+					if (camControl != null) {
+						camControl.SetEndingCameraAction ();
+					}
+
+					GameObject player = GameObject.Find ("Player");
+					if(player!= null)
+					{
+						player.GetComponent<FireCtrl> ().stopFire = true;
+					}
+							
+
 				}
 			}
 		}
@@ -103,12 +117,30 @@ public class GameMgr : MonoBehaviour {
 
 		monsterPool.Clear ();
 
-		//Debug.Log ("maxmoonster = " + maxMonster.ToString ());
+		//int halfPoints = points.Length / 2;
+		int startPoints = points.Length - 3;
+		int random = 0;
+		Random.InitState ((int)System.DateTime.Now.Ticks);
+		//random = Random.Range (1, halfPoints);
+		random = Random.Range (1, 100);
+		random = (random % startPoints) + 3;
+		//Debug.Log ("halfPoints and random = " + halfPoints.ToString () + "," + random.ToString ());
+
+		int startPos = random;
+		Random.InitState ((int)System.DateTime.Now.Ticks);
+		random = Random.Range (1, 100);
+		random = (random % 2) + 1;
+		//temporary 2 dest
+		int destPos = random;
 		for (int i = 0; i < maxMonster; i++) {
 			GameObject monster = (GameObject)Instantiate (monsterPrefab);
 			monster.name = "Monster_" + i.ToString ();
+			if(i==0)
+				monster.tag = "BOSS";
 
-			//string[] str = monster.name.Split("_");
+			monster.GetComponent<EnemyScript>().startIndex = startPos;
+			monster.GetComponent<EnemyScript>().destinationIndex = destPos;
+
 			string[] splitString = monster.name.Split (new string[] { "_", "\n" }, System.StringSplitOptions.None);
 			//Debug.Log(splitString[1]);
 
@@ -141,7 +173,7 @@ public class GameMgr : MonoBehaviour {
 			if (!monster.activeSelf) {
 				//idx = Random.Range (1, points.Length);
 
-				monster.transform.position = points [2].position;
+				//monster.transform.position = points [2].position;
 
 				monster.SetActive (true);
 

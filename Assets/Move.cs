@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.EventSystems;
 
 public class Move : MonoBehaviour {
 	Vector3 lookDir;
@@ -59,6 +59,10 @@ public class Move : MonoBehaviour {
 			Vector2 pos = touch.position;
 
 			//gameUI.textGoal.text = pos.ToString ();
+			//skip touch event when object selected
+			if (EventSystem.current.currentSelectedGameObject != null) {
+				return;
+			}
 
 			Vector3 p = Camera.main.ScreenToWorldPoint (new Vector3 (pos.x, pos.y, 30));//Camera.main.nearClipPlane));
 			p.y = 0.0f;//1.6f;
@@ -93,17 +97,13 @@ public class Move : MonoBehaviour {
 
 
 			*/
-			//this.transform.rotation = Quaternion.LookRotation (lookDir);
-			//this.transform.position += (lookDir * moveSpeed * Time.deltaTime);
-			//m_Rigidbody.AddForce(lookDir*moveSpeed);
+			this.transform.position += (lookDir * moveSpeed * Time.deltaTime);
 
-			float moveHorizontal = Input.GetAxis ("Horizontal");
-			float moveVertical = Input.GetAxis ("Vertical");
-
-			Vector3 movement = new Vector3 (zz, 0, xx);//;;moveHorizontal, 0.0f, moveVertical);
-			GetComponentInChildren<Rigidbody>().velocity = movement * moveSpeed;
-
-			GetComponentInChildren<Rigidbody>().rotation = Quaternion.Euler (0.0f, 0.0f, GetComponent<Rigidbody>().velocity.x * -5);
+			//float moveHorizontal = Input.GetAxis ("Horizontal");
+			//float moveVertical = Input.GetAxis ("Vertical");
+			//Vector3 movement = new Vector3 (zz, 0, xx);//;;moveHorizontal, 0.0f, moveVertical);
+			//GetComponentInChildren<Rigidbody>().velocity = movement * moveSpeed;
+			//GetComponentInChildren<Rigidbody>().rotation = Quaternion.Euler (0.0f, 0.0f, GetComponent<Rigidbody>().velocity.x * -5);
 		}
 		if (Input.GetKey (KeyCode.Q)) {
 			transform.Rotate (-1 * Vector3.up * Time.deltaTime * 100, Space.World);
