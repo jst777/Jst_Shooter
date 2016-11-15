@@ -135,9 +135,9 @@ public class GameMgr : MonoBehaviour {
 		for (int i = 0; i < maxMonster; i++) {
 			GameObject monster = (GameObject)Instantiate (monsterPrefab);
 			monster.name = "Monster_" + i.ToString ();
-			if(i==0)
+			if (i == 0) {
 				monster.tag = "BOSS";
-
+			}
 			monster.GetComponent<EnemyScript>().startIndex = startPos;
 			monster.GetComponent<EnemyScript>().destinationIndex = destPos;
 

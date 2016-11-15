@@ -22,7 +22,11 @@ public class HealthBar : MonoBehaviour {
 		} else if (tag == "BOSS") {
 			maxHealth = 5;
 			currHealth = 5;
-		} else {
+		} else if (tag == "Fellow") {
+			maxHealth = 5;
+			currHealth = 5;
+		}
+		else {
 			maxHealth = 1;
 			currHealth = 1;
 		}

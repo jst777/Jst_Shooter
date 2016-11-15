@@ -42,7 +42,7 @@ public class EnemyScript : MonoBehaviour {
 	void Start () {
 		//startIndex = 2;
 		//destinationIndex = 3;
-		Debug.Log("Points Index = " + startIndex.ToString() + "," + destinationIndex.ToString());
+		//Debug.Log("Points Index = " + startIndex.ToString() + "," + destinationIndex.ToString());
 
 		Speed = 1.0f;
 
@@ -66,6 +66,18 @@ public class EnemyScript : MonoBehaviour {
 			transform.localScale = new Vector3 (1.5f, 1.5f, 1.5f);
 		}
 		transform.position = points [startIndex].position;
+
+		// boss color set
+		if (tag == "BOSS") {
+			MeshRenderer meshRender = GetComponentInChildren<MeshRenderer> ();
+			if (meshRender != null) {
+				if (meshRender.materials.Length > 0) {
+					Debug.Log ("Boss - Material set");
+					//meshRender.material.color = Color.red;
+					meshRender.materials [0].color = Color.yellow;
+				}
+			}
+		}
 	}
 
 	void Awake(){
@@ -78,7 +90,7 @@ public class EnemyScript : MonoBehaviour {
 
 		if (splitString.Length >= 2 && isSetPos == false) {
 			int idx = 0;
-			Debug.Log ("splitString.length" + splitString.Length.ToString() + splitString[1].ToString());		
+			//Debug.Log ("splitString.length" + splitString.Length.ToString() + splitString[1].ToString());		
 			if (int.TryParse (splitString [1], out idx)) {
 			}
 				
