@@ -64,7 +64,7 @@ public class GameMgr : MonoBehaviour {
 	public void UpdateScore()
 	{
 		//Debug.Log ("Delegate test");
-		int currentScore = PlayerPrefs.GetInt("TOT_SCORE");
+		//int currentScore = PlayerPrefs.GetInt("TOT_SCORE");
 
 		foreach (GameObject monster in monsterPool) {
 			if (monster.activeSelf) {
@@ -132,6 +132,11 @@ public class GameMgr : MonoBehaviour {
 		random = (random % 2) + 1;
 		//temporary 2 dest
 		int destPos = random;
+		Random.InitState ((int)System.DateTime.Now.Ticks);
+		float randomFormation = Random.Range (0, (float)EnemyFormation.eFormation.eMaxFormation);
+
+		//EnemyFormation.eFormation randomFormation = randomFormation;//EnemyFormation.eFormation.eMaxFormation;
+
 		for (int i = 0; i < maxMonster; i++) {
 			GameObject monster = (GameObject)Instantiate (monsterPrefab);
 			monster.name = "Monster_" + i.ToString ();
@@ -141,7 +146,9 @@ public class GameMgr : MonoBehaviour {
 			monster.GetComponent<EnemyScript>().startIndex = startPos;
 			monster.GetComponent<EnemyScript>().destinationIndex = destPos;
 
-			string[] splitString = monster.name.Split (new string[] { "_", "\n" }, System.StringSplitOptions.None);
+			monster.GetComponent<EnemyFormation>().formation = (EnemyFormation.eFormation)randomFormation;
+
+			//string[] splitString = monster.name.Split (new string[] { "_", "\n" }, System.StringSplitOptions.None);
 			//Debug.Log(splitString[1]);
 
 			//if(i==0)

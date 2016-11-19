@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour {
 	// Use this for initialization
-	bool isSetPos = false;
+	public bool isSetPos = false;
 
 	public Vector3 vOffsetToBoss = new Vector3(0,0,0);
 	public Vector3 vDestination;
 
 	public Vector3 vInitTargetPos;
 
-	public float offsetXZ = 1.0f;
+	//public float offsetXZ = 1.0f;
 
 	private GameMgr gameMgrRef;
 
@@ -24,7 +24,7 @@ public class EnemyScript : MonoBehaviour {
 		set;
 
 	}
-	private Transform[] points;
+	public Transform[] points;
 
 	public float Speed {
 		get;
@@ -56,7 +56,11 @@ public class EnemyScript : MonoBehaviour {
 		gameMgrRef = GameObject.Find ("Camera").GetComponent<GameMgr> ();
 		points = GameObject.Find ("SpawnPoint").GetComponentsInChildren<Transform> ();
 
-		CalculateOffsetPos ();
+		//EnemyFormation enemyFormation = GetComponent<EnemyFormation> ();
+		//if (enemyFormation) {
+		//	enemyFormation.CalculateOffsetPos ();
+		//}
+		//CalculateOffsetPos ();
 
 		if (tag == "BOSS") {
 			//if (healthBar != null) {
@@ -83,7 +87,7 @@ public class EnemyScript : MonoBehaviour {
 	void Awake(){
 		//still not made name so.. call from start
 	}
-
+	/*
 	void CalculateOffsetPos(){
 
 		string[] splitString = name.Split(new string[] { "_", "\n"}, System.StringSplitOptions.None);
@@ -125,6 +129,7 @@ public class EnemyScript : MonoBehaviour {
 			vDestination = points[destinationIndex].transform.position + vOffsetToBoss;
 		}
 	}
+	*/
 	
 	// Update is called once per frame
 	void Update () {
