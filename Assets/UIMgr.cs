@@ -178,4 +178,10 @@ public class UIMgr : MonoBehaviour {
 
 		SceneManager.LoadScene ("JstScene");
 	}
+
+	public void OnClickMainMenuButton()
+	{
+		SceneManager.LoadScene ("MainMenuScene");
+	}
+
 }

@@ -22,10 +22,19 @@ public class PlayerCtrl : MonoBehaviour {
 		//fellowPrefab = (GameObject)Resources.Load("Fellow", typeof(GameObject));
 		if (fellowPrefab != null) {
 			if (fellowPos.Length > 0) {
+				string fellowName;
 				for(int i=0; i< fellowPos.Length; i++)
 				{
-					GameObject fellow = (GameObject)Instantiate (fellowPrefab, fellowPos [i].position, fellowPos[i].rotation);
-					fellow.transform.parent = transform;
+					fellowName = "Fellow" + (i + 1).ToString ();
+					int hasFellow = PlayerPrefs.GetInt(fellowName);
+					if (hasFellow ==1) {
+						GameObject fellow = (GameObject)Instantiate (fellowPrefab, fellowPos [i].position, fellowPos [i].rotation);
+						fellow.transform.parent = transform;
+						FellowCtrl fellowCtrl = fellow.GetComponent<FellowCtrl> ();
+						if (fellowCtrl != null) {
+							fellowCtrl.SetColorIndex (i);
+						}
+					}
 					//Debug.Log ("fellowPrefab created");
 				}
 			}

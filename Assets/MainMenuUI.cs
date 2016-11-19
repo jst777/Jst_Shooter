@@ -49,6 +49,11 @@ public class MainMenuUI : MonoBehaviour {
 		SceneManager.LoadScene ("JstScene");
 	}
 
+	public void OnClickShopButton()
+	{
+		SceneManager.LoadScene ("ShopScene");
+	}
+
 	public void OnClickChatButton()
 	{
 		ServerManager mgr = Camera.main.GetComponent<ServerManager> ();
