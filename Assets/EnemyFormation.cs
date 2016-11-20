@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyFormation : MonoBehaviour {
-	public float offsetXZ = 3.0f;
+	public float offsetXZ = 1.0f;
 	public enum eFormation
 	{
 		ePyramidFormation,
@@ -58,6 +58,7 @@ public class EnemyFormation : MonoBehaviour {
 	{
 		int sum = 0;
 		int selectedCol = 0;
+		offsetXZ = 2.0f;
 
 		for (int col = 1; col < 100; col++) {
 			sum += col;
@@ -75,7 +76,7 @@ public class EnemyFormation : MonoBehaviour {
 		float pos = index - centerIndex;
 
 		//Debug.Log ("[x][z] = " + pos.ToString () + " " + centerIndex.ToString () + " " + selectedCol.ToString ());
-
+		Debug.Log ("offsetXZ = " + offsetXZ.ToString());
 
 		GetComponent<EnemyScript>().vOffsetToBoss = new Vector3 (offsetXZ * pos, 0, offsetXZ * selectedCol);
 	}
