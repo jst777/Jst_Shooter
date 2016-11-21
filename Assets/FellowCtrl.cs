@@ -8,6 +8,9 @@ public class FellowCtrl : MonoBehaviour {
 	public int colorIndex = 0;
 	Color[] colorList = {Color.blue, Color.red, Color.yellow, Color.green};
 
+	public GameObject shieldPrefab;
+	public GameObject shieldObject = null;
+
 	void Start () {
 		transform.localScale = new Vector3 (0.5f, 0.5f, 0.5f);
 		/*
@@ -28,7 +31,7 @@ public class FellowCtrl : MonoBehaviour {
 		
 	}
 
-	public void SetColorIndex(int index)
+	public void SetColorIndex(int index, float scaleFactor = 1.0f)
 	{
 		colorIndex = index;
 
@@ -39,6 +42,17 @@ public class FellowCtrl : MonoBehaviour {
 					
 					//meshRender.material.color = Color.red;
 					meshRender.materials [0].color = colorList[colorIndex];
+				}
+			}
+			if (colorList[colorIndex] == Color.yellow) {
+
+				if (shieldPrefab != null) {
+					if (shieldObject == null) {
+						shieldObject = Instantiate (shieldPrefab, transform.position, transform.rotation);
+						shieldObject.transform.localScale = new Vector3 (3 * scaleFactor, 3 * scaleFactor, 3 * scaleFactor);
+						//shieldObj.transform.parent = transform;
+						shieldObject.transform.parent = transform;
+					}
 				}
 			}
 		}

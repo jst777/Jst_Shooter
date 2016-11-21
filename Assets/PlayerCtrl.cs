@@ -32,7 +32,7 @@ public class PlayerCtrl : MonoBehaviour {
 						fellow.transform.parent = transform;
 						FellowCtrl fellowCtrl = fellow.GetComponent<FellowCtrl> ();
 						if (fellowCtrl != null) {
-							fellowCtrl.SetColorIndex (i);
+							fellowCtrl.SetColorIndex (i, 3);
 						}
 					}
 					//Debug.Log ("fellowPrefab created");

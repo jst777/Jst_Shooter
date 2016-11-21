@@ -16,7 +16,7 @@ public class WallCtrl : MonoBehaviour {
 
 	void OnCollisionEnter(Collision coll)
 	{
-		Destroy (coll.gameObject);
-		Destroy (this.gameObject);
+		//Destroy (coll.gameObject);
+		//Destroy (this.gameObject);
 	}
 }

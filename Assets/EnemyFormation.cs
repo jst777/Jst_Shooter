@@ -50,7 +50,12 @@ public class EnemyFormation : MonoBehaviour {
 				//tag = "BOSS"; //set index 0 to boss
 			}
 
-			GetComponent<EnemyScript>().vDestination = GetComponent<EnemyScript>().points[GetComponent<EnemyScript>().destinationIndex].transform.position + GetComponent<EnemyScript>().vOffsetToBoss;
+			EnemyScript enemyScript = GetComponent<EnemyScript> ();
+			if (enemyScript != null) {
+				if (enemyScript.points.Length > enemyScript.destinationIndex) {
+					enemyScript.vDestination = enemyScript.points [enemyScript.destinationIndex].transform.position + enemyScript.vOffsetToBoss;
+				}
+			}
 		}
 	}
 

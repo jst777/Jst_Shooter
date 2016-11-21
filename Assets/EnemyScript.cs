@@ -54,8 +54,10 @@ public class EnemyScript : MonoBehaviour {
 		}
 
 		gameMgrRef = GameObject.Find ("Camera").GetComponent<GameMgr> ();
-		points = GameObject.Find ("SpawnPoint").GetComponentsInChildren<Transform> ();
-
+		GameObject spawnPoint = GameObject.Find ("SpawnPoint");
+		if (spawnPoint != null) {
+			points = GameObject.Find ("SpawnPoint").GetComponentsInChildren<Transform> ();
+		}
 		//EnemyFormation enemyFormation = GetComponent<EnemyFormation> ();
 		//if (enemyFormation) {
 		//	enemyFormation.CalculateOffsetPos ();
