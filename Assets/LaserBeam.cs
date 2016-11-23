@@ -36,7 +36,9 @@ public class LaserBeam : MonoBehaviour {
 					enemyScript.OnDamaged ();
 				}
 				else {
-					Destroy (hit.collider.gameObject);
+					FellowCtrl fellowCtrl = hit.collider.gameObject.GetComponent<FellowCtrl> ();
+					if(fellowCtrl == null)
+						Destroy (hit.collider.gameObject);
 				}
 			}
 		}
@@ -55,7 +57,9 @@ public class LaserBeam : MonoBehaviour {
 				Debug.Log ("LaserBeam - broke" + hit.collider.gameObject.name);
 				enemyScript.OnDamaged ();
 			} else {
-				Destroy (hit.collider.gameObject);
+				FellowCtrl fellowCtrl = hit.collider.gameObject.GetComponent<FellowCtrl> ();
+				if(fellowCtrl == null)
+					Destroy (hit.collider.gameObject);
 			}
 		}
 

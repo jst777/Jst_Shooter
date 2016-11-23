@@ -9,7 +9,8 @@ public class CameraControl : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		offset.Set (0, 30, 15);
+		//offset.Set (0, 30, 15);
+		offset.Set (0, 40, 15);
 		if (Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.WindowsEditor) {
 		}
 

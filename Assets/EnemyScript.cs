@@ -89,50 +89,7 @@ public class EnemyScript : MonoBehaviour {
 	void Awake(){
 		//still not made name so.. call from start
 	}
-	/*
-	void CalculateOffsetPos(){
 
-		string[] splitString = name.Split(new string[] { "_", "\n"}, System.StringSplitOptions.None);
-
-		if (splitString.Length >= 2 && isSetPos == false) {
-			int idx = 0;
-			//Debug.Log ("splitString.length" + splitString.Length.ToString() + splitString[1].ToString());		
-			if (int.TryParse (splitString [1], out idx)) {
-			}
-				
-			if (idx != 0) {
-				
-				int sum = 0;
-				int selectedCol = 0;
-
-				for (int col = 1; col < 100; col++) {
-					sum += col;
-					if (idx < sum) {
-						selectedCol = col;
-						break;	
-					}
-				}
-
-				sum -= selectedCol;
-				selectedCol -= 1;
-
-
-				float centerIndex = sum + (selectedCol) * 0.5f;
-				float pos = idx - centerIndex;
-
-				//Debug.Log ("[x][z] = " + pos.ToString () + " " + centerIndex.ToString () + " " + selectedCol.ToString ());
-
-			
-				vOffsetToBoss = new Vector3 (offsetXZ * pos, 0, offsetXZ * selectedCol);
-			} else {
-				//tag = "BOSS"; //set index 0 to boss
-			}
-
-			vDestination = points[destinationIndex].transform.position + vOffsetToBoss;
-		}
-	}
-	*/
-	
 	// Update is called once per frame
 	void Update () {
 		if (points == null)
