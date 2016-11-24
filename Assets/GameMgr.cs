@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GameMgr : MonoBehaviour {
-	public Transform[] points;
+	public Transform[] spawnPoints;
+	public Transform[] destPoints;
 
 	public GameObject monsterPrefab;
 	public List<GameObject> monsterPool = new List<GameObject>();
@@ -39,7 +40,8 @@ public class GameMgr : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		points = GameObject.Find ("SpawnPoint").GetComponentsInChildren<Transform> ();
+		spawnPoints = GameObject.Find ("SpawnPoint").GetComponentsInChildren<Transform> ();
+		destPoints = GameObject.Find ("DestinationPoint").GetComponentsInChildren<Transform> ();
 		currentStep = 1;
 
 
@@ -117,20 +119,14 @@ public class GameMgr : MonoBehaviour {
 
 		monsterPool.Clear ();
 
-		//int halfPoints = points.Length / 2;
-		int startPoints = points.Length - 3;
+
 		int random = 0;
 		Random.InitState ((int)System.DateTime.Now.Ticks);
-		//random = Random.Range (1, halfPoints);
-		random = Random.Range (1, 100);
-		random = (random % startPoints) + 3;
-		//Debug.Log ("halfPoints and random = " + halfPoints.ToString () + "," + random.ToString ());
+		random = (random % spawnPoints.Length);
 
 		int startPos = random;
 		Random.InitState ((int)System.DateTime.Now.Ticks);
-		random = Random.Range (1, 100);
-		random = (random % 2) + 1;
-		//temporary 2 dest
+		random = (random % destPoints.Length);
 		int destPos = random;
 		Random.InitState ((int)System.DateTime.Now.Ticks);
 		float randomFormation = Random.Range (0, (float)EnemyFormation.eFormation.eMaxFormation);
@@ -146,7 +142,7 @@ public class GameMgr : MonoBehaviour {
 			monster.GetComponent<EnemyScript>().startIndex = startPos;
 			monster.GetComponent<EnemyScript>().destinationIndex = destPos;
 
-			monster.GetComponent<EnemyFormation>().formation = (EnemyFormation.eFormation)randomFormation;
+			monster.GetComponent<EnemyFormation> ().formation = (EnemyFormation.eFormation)randomFormation;
 
 			//string[] splitString = monster.name.Split (new string[] { "_", "\n" }, System.StringSplitOptions.None);
 			//Debug.Log(splitString[1]);
@@ -158,13 +154,10 @@ public class GameMgr : MonoBehaviour {
 			monster.SetActive (false);
 			monsterPool.Add (monster);
 
-			if (points.Length > 0) {
+			if (spawnPoints.Length > 0) {
 				StartCoroutine (this.CreateMonster (i));
 			}
 
-			//Debug.Log ("points size =  " + points.Length);
-
-			//monster.transform.position = points [1].position;
 		}
 	}
 
@@ -178,9 +171,7 @@ public class GameMgr : MonoBehaviour {
 		//int idx = 1;
 		foreach (GameObject monster in monsterPool) {
 			if (!monster.activeSelf) {
-				//idx = Random.Range (1, points.Length);
 
-				//monster.transform.position = points [2].position;
 
 				monster.SetActive (true);
 

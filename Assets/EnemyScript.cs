@@ -24,7 +24,8 @@ public class EnemyScript : MonoBehaviour {
 		set;
 
 	}
-	public Transform[] points;
+	public Transform[] spawnpoints;
+	public Transform[] destpoints;
 
 	public float Speed {
 		get;
@@ -56,8 +57,13 @@ public class EnemyScript : MonoBehaviour {
 		gameMgrRef = GameObject.Find ("Camera").GetComponent<GameMgr> ();
 		GameObject spawnPoint = GameObject.Find ("SpawnPoint");
 		if (spawnPoint != null) {
-			points = GameObject.Find ("SpawnPoint").GetComponentsInChildren<Transform> ();
+			spawnpoints = spawnPoint.GetComponentsInChildren<Transform> ();
 		}
+		GameObject destPoint = GameObject.Find ("DestinationPoint");
+		if (destPoint != null) {
+			destpoints = destPoint.GetComponentsInChildren<Transform> ();
+		}
+
 		//EnemyFormation enemyFormation = GetComponent<EnemyFormation> ();
 		//if (enemyFormation) {
 		//	enemyFormation.CalculateOffsetPos ();
@@ -71,7 +77,7 @@ public class EnemyScript : MonoBehaviour {
 			Speed = 2.0f;
 			transform.localScale = new Vector3 (1.5f, 1.5f, 1.5f);
 		}
-		transform.position = points [startIndex].position;
+		transform.position = spawnpoints[startIndex].position;
 
 		// boss color set
 		if (tag == "BOSS") {
@@ -92,18 +98,18 @@ public class EnemyScript : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (points == null)
+		if (spawnpoints == null || destpoints == null)
 			return;
-		if (points.Length == 0)
+		if (spawnpoints.Length == 0 || destpoints.Length == 0)
 			return;
-		if (points [destinationIndex] == null || points [startIndex] == null)
-			return;
+		//if (destpoints [destinationIndex] == null || spawnpoints [startIndex] == null)
+		//	return;
 
 		float fDistance = Vector3.Distance(vDestination, transform.position); 
 
 		if (tag == "BOSS") {
 			if (fDistance > 1) {
-				Vector3 vDir = points [destinationIndex].position - points [startIndex].position;
+				Vector3 vDir = destpoints[destinationIndex].position - spawnpoints[startIndex].position;
 				
 				transform.rotation = Quaternion.LookRotation (vDir.normalized);//Quaternion.RotateTowards(transform.rotation, q, rotatieSpeed * Time.deltaTime);
 			} else {
@@ -130,7 +136,7 @@ public class EnemyScript : MonoBehaviour {
 		}
 		if (tag == "BOSS") 
 		{
-			transform.position = Vector3.Slerp (transform.position, points[destinationIndex].position, Speed * Time.deltaTime);
+			transform.position = Vector3.Slerp (transform.position, destpoints[destinationIndex].position, Speed * Time.deltaTime);
 
 			Velocity = transform.forward;
 			Velocity = Velocity.normalized * Speed;
@@ -138,8 +144,8 @@ public class EnemyScript : MonoBehaviour {
 		}
 		else {
 			GameObject bossObj = GameObject.FindWithTag ("BOSS");
-			if (bossObj != null) {
-				float fDistanceToBoss = Vector3.Distance (bossObj.transform.position, transform.position);
+			if (bossObj != null && bossObj.activeSelf) {
+				//float fDistanceToBoss = Vector3.Distance (bossObj.transform.position, transform.position);
 
 				if (gameMgrRef != null) {
 					//test
@@ -158,11 +164,15 @@ public class EnemyScript : MonoBehaviour {
 					*/
 				}
 			} else {
-				GameObject playerObj = GameObject.Find ("Player");
-				if (playerObj != null) {
-					//transform.position = Vector3.Slerp (transform.position, playerObj.transform.position, Speed * Time.deltaTime);
+				//boss die set
+				if (GetComponent<EnemyState> ().enemyState != EnemyState.eEnemyState.eNormalState)
+					GetComponent<EnemyState> ().enemyState = EnemyState.eEnemyState.eNormalState;
+				//GameObject playerObj = GameObject.Find ("Player");
+				//if (playerObj != null)
+				{
 					transform.position+= (transform.forward * Speed * Time.deltaTime * 10);
 
+					Debug.Log ("Enemy Move After boss die " + transform.forward.ToString ());
 					Plane[] planes = GeometryUtility.CalculateFrustumPlanes (Camera.main);
 					//out of sight
 					if (!GeometryUtility.TestPlanesAABB (planes, gameObject.GetComponent<Collider> ().bounds)) {
@@ -171,6 +181,7 @@ public class EnemyScript : MonoBehaviour {
 				}
 			}
 		}
+		Debug.Log (gameObject.name + " " + transform.position.ToString ());
 	}
 
 	void OffsetPursuit(GameObject leader, Vector3 offsetPos){
@@ -338,11 +349,14 @@ public class EnemyScript : MonoBehaviour {
 
 	public void OnDamaged()
 	{
+		if (GetComponent<EnemyState> ().enemyState == EnemyState.eEnemyState.eImmortalState)
+			return;
 		if (healthBar != null) {
-
-			healthBar.currHealth -= 1;
-			if (healthBar.currHealth <= 0) {
-				DisableAndAddScore ();
+			if (healthBar.currHealth > 0) {
+				healthBar.currHealth -= 1;
+				if (healthBar.currHealth <= 0) {
+					DisableAndAddScore ();
+				}
 			}
 		}
 	}
@@ -350,7 +364,8 @@ public class EnemyScript : MonoBehaviour {
 
 	void DisableAndAddScore()
 	{
-		if (GetComponent<EnemyState> ().enemyState == EnemyState.eEnemyState.eNormalState) {
+		if (GetComponent<EnemyState> ().enemyState != EnemyState.eEnemyState.eImmortalState)
+		{
 			this.gameObject.SetActive (false);
 
 			GameUI gameUI = Camera.main.GetComponent<GameUI> ();

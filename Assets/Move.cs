@@ -64,9 +64,14 @@ public class Move : MonoBehaviour {
 				return;
 			}
 
-			Vector3 p = Camera.main.ScreenToWorldPoint (new Vector3 (pos.x, pos.y, 30));//Camera.main.nearClipPlane));
+			CameraControl camcontrol = Camera.main.GetComponent<CameraControl> ();
+			float fHeight = 30;
+			if (camcontrol != null) {
+				fHeight = camcontrol.offset.y;
+			}
+			Vector3 p = Camera.main.ScreenToWorldPoint (new Vector3 (pos.x, pos.y, fHeight));//Camera.main.nearClipPlane));
 			p.y = 0.0f;//1.6f;
-			transform.position = Vector3.Lerp (transform.position, p, Time.deltaTime * 1.2f);
+			transform.position = Vector3.Lerp (transform.position, p, Time.deltaTime * 2.0f);// 1.2f);
 
 			// Todo later 
 			//Vector3 movement = p - transform.position;//new Vector3 (p.x, 0, p.z);//;;moveHorizontal, 0.0f, moveVertical);

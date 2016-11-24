@@ -52,8 +52,8 @@ public class EnemyFormation : MonoBehaviour {
 
 			EnemyScript enemyScript = GetComponent<EnemyScript> ();
 			if (enemyScript != null) {
-				if (enemyScript.points.Length > enemyScript.destinationIndex) {
-					enemyScript.vDestination = enemyScript.points [enemyScript.destinationIndex].transform.position + enemyScript.vOffsetToBoss;
+				if (enemyScript.destpoints.Length > enemyScript.destinationIndex) {
+					enemyScript.vDestination = enemyScript.destpoints [enemyScript.destinationIndex].transform.position + enemyScript.vOffsetToBoss;
 				}
 			}
 		}
@@ -104,8 +104,8 @@ public class EnemyFormation : MonoBehaviour {
 		int halfmaxMonster = maxMonster / 2;
 		rad_step *= (index - halfmaxMonster);
 
-		float c = Mathf.Cos(rad_step);
-		float s = Mathf.Sin (rad_step);
+		//float c = Mathf.Cos(rad_step);
+		//float s = Mathf.Sin (rad_step);
 		Vector3 pos;
 		/*
 		pos.x = vInitPos.x * c - vInitPos.z * s;
@@ -128,7 +128,7 @@ public class EnemyFormation : MonoBehaviour {
 
 		float fPartitionTheta = 180 / maxMonster;
 		float rad_step = Mathf.PI / 180 * fPartitionTheta;
-
+		offsetXZ = 5;
 
 		int halfmaxMonster = maxMonster / 2;
 		rad_step *= (index - halfmaxMonster);
@@ -145,7 +145,8 @@ public class EnemyFormation : MonoBehaviour {
 		pos.x = forward.x * c - forward.z * s;
 		pos.z = forward.x * s + forward.z * c;
 		pos.y = 0;
-		pos *= offsetXZ;
+		pos = pos.normalized * offsetXZ;
+		//pos *= offsetXZ;
 
 		GetComponent<EnemyScript> ().vOffsetToBoss = pos;//new Vector3 (offsetXZ * pos.x, 0, offsetXZ * pos.z);
 	}

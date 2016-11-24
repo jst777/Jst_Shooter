@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour {
 	public GameObject player;       //Public variable to store a reference to the player game object
-	private Vector3 offset;         //Private variable to store the offset distance between the player and camera
+	public Vector3 offset;         //Private variable to store the offset distance between the player and camera
 	private bool endingCameraAction;
 
 	// Use this for initialization
