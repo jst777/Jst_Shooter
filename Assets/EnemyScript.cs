@@ -15,6 +15,8 @@ public class EnemyScript : MonoBehaviour {
 
 	private GameMgr gameMgrRef;
 
+	public GameObject explosion;
+
     public int destinationIndex {
 		get;
 		set;
@@ -356,6 +358,8 @@ public class EnemyScript : MonoBehaviour {
 				healthBar.currHealth -= 1;
 				if (healthBar.currHealth <= 0) {
 					DisableAndAddScore ();
+
+					Instantiate(explosion, transform.position, transform.rotation);
 				}
 			}
 		}
