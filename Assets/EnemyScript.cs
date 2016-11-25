@@ -181,7 +181,7 @@ public class EnemyScript : MonoBehaviour {
 				}
 			}
 		}
-		Debug.Log (gameObject.name + " " + transform.position.ToString ());
+		//Debug.Log (gameObject.name + " " + transform.position.ToString ());
 	}
 
 	void OffsetPursuit(GameObject leader, Vector3 offsetPos){

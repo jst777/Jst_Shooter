@@ -16,9 +16,16 @@ public class FellowFireCtrl : MonoBehaviour {
 	}
 
 	void Start () {
-		StartCoroutine (FireCoroutine());
-		laser = GetComponentInChildren<LaserBeam> ();
-		stopFire = false;
+		FellowCtrl fellowCtrl = GetComponent<FellowCtrl> ();
+		if (fellowCtrl != null) {
+			//Debug.Log ("fellowCtrl != null" + fellowCtrl.colorIndex.ToString());
+			if (fellowCtrl.colorIndex != 2 && fellowCtrl.colorIndex != 3) {
+				
+				StartCoroutine (FireCoroutine ());
+				laser = GetComponentInChildren<LaserBeam> ();
+				stopFire = false;
+			}
+		}
 	}
 
 	// Update is called once per frame
@@ -29,6 +36,8 @@ public class FellowFireCtrl : MonoBehaviour {
 	{
 		while (true) {
 			yield return new WaitForSeconds (fireTerm);
+
+
 			if (stopFire)
 				break;
 			if (laser != null) {

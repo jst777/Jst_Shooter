@@ -81,7 +81,7 @@ public class EnemyFormation : MonoBehaviour {
 		float pos = index - centerIndex;
 
 		//Debug.Log ("[x][z] = " + pos.ToString () + " " + centerIndex.ToString () + " " + selectedCol.ToString ());
-		Debug.Log ("offsetXZ = " + offsetXZ.ToString());
+		//Debug.Log ("offsetXZ = " + offsetXZ.ToString());
 
 		GetComponent<EnemyScript>().vOffsetToBoss = new Vector3 (offsetXZ * pos, 0, offsetXZ * selectedCol);
 	}
@@ -112,7 +112,7 @@ public class EnemyFormation : MonoBehaviour {
 		pos.z = vInitPos.x * s + vInitPos.z * c;
 		*/
 		pos.x = (index-1 - halfmaxMonster) * 2;
-		Debug.Log ("posX =" + pos.x.ToString ());
+		//Debug.Log ("posX =" + pos.x.ToString ());
 		float fgradient = 1 / (float)Mathf.Pow(halfmaxMonster, 1.2f);//0.2f;
 		pos.z = fgradient * -1 * Mathf.Pow (Mathf.Abs(pos.x), 2f);
 		//pos.z = 2 * Mathf.Sqrt (Mathf.Abs (pos.x));
@@ -133,7 +133,7 @@ public class EnemyFormation : MonoBehaviour {
 		int halfmaxMonster = maxMonster / 2;
 		rad_step *= (index - halfmaxMonster);
 
-		Debug.Log ("rad_Step = " + rad_step);
+		//Debug.Log ("rad_Step = " + rad_step);
 		
 		float c = Mathf.Cos(rad_step);
 		float s = Mathf.Sin (rad_step);

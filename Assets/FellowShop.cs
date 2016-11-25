@@ -33,6 +33,23 @@ public class FellowShop : MonoBehaviour {
 		PlayerPrefs.SetInt ("Fellow4", 1);
 	}
 
+	public void OnClickBuyButton5()
+	{
+		PlayerPrefs.SetInt ("PlayerShip_Index", 1);
+	}
+	public void OnClickBuyButton6()
+	{
+		PlayerPrefs.SetInt ("PlayerShip_Index", 2);
+	}
+	public void OnClickBuyButton7()
+	{
+		PlayerPrefs.SetInt ("PlayerShip_Index", 3);
+	}
+	public void OnClickBuyButton8()
+	{
+		PlayerPrefs.SetInt ("PlayerShip_Index", 4);
+	}
+
 	public void OnClickMainMenuButton()
 	{
 		SceneManager.LoadScene ("MainMenuScene");

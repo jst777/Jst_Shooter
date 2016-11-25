@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FellowCtrl : MonoBehaviour {
-	public Color color = Color.blue;
+	//public Color color = Color.blue;
 	// Use this for initialization
 	public int colorIndex = 0;
 	Color[] colorList = {Color.blue, Color.red, Color.yellow, Color.green};
@@ -13,16 +13,7 @@ public class FellowCtrl : MonoBehaviour {
 
 	void Start () {
 		transform.localScale = new Vector3 (0.5f, 0.5f, 0.5f);
-		/*
-		MeshRenderer meshRender = GetComponentInChildren<MeshRenderer> ();
-		if (meshRender != null) {
-			if (meshRender.materials.Length > 0) {
-				
-				//meshRender.material.color = Color.red;
-				meshRender.materials [0].color = colorList[colorIndex];
-			}
-		}
-		*/
+
 		SetColorIndex (colorIndex);
 	}
 	
