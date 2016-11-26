@@ -439,7 +439,12 @@ public class EnemyScript : MonoBehaviour {
 	{
 		//Debug.Log ("OnTriggerEnter" + other.gameObject.name);
 		if (other.gameObject.tag == "Bullet") {
-			Destroy (other.gameObject);
+			
+			//Destroy (other.gameObject);
+
+			BulletCtrl bulletCtrl = other.gameObject.GetComponent<BulletCtrl>();
+			//내부에서 지운다
+			bulletCtrl.CollisionDetected ();
 			if (GetComponent<EnemyState> ().enemyState == EnemyState.eEnemyState.eNormalState) {
 				OnDamaged ();
 

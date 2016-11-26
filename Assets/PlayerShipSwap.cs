@@ -25,5 +25,10 @@ public class PlayerShipSwap : MonoBehaviour {
 		//if (prefab == null)
 		//	Debug.Log ("Prefab = null");
 		GetComponentInChildren<MeshFilter> ().mesh = prefab.GetComponent<MeshFilter> ().sharedMesh;
+
+		float scaleFactor = 1.0f;
+		scaleFactor *= shipIndex;
+
+		GetComponent<FireCtrl>().scaleFactor = scaleFactor;
 	}
 }

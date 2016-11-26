@@ -7,6 +7,7 @@ public class BulletCtrl : MonoBehaviour {
 	public float speed = 1000.0f;
 
 	public GameObject parentObj = null;
+	public float scaleFactor = 1.0f;
 
 	public bool segMentFlag {
 		get;
@@ -33,13 +34,23 @@ public class BulletCtrl : MonoBehaviour {
 	void Start () {
 
 		if(AddForce)
-			GetComponent<Rigidbody> ().AddForce (transform.forward * speed);	
+			GetComponent<Rigidbody> ().AddForce (transform.forward * speed);
+
+		Destroy (gameObject, 5);
 	}
 
 	void OnBecameInvisible()
 	{
 		Destroy (gameObject);
 		//Debug.Log ("OnBecameInvisible" + gameObject.name);
+	}
+
+	public void CollisionDetected()
+	{
+		scaleFactor -= 1.0f;
+		if (scaleFactor <= 0) {
+			Destroy (gameObject);
+		}
 	}
 
 	

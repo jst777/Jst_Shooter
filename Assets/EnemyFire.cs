@@ -57,6 +57,9 @@ public class EnemyFire : MonoBehaviour {
 	}
 	void CreateBullet()
 	{
+		GameObject player = GameObject.Find ("Player");
+		if (player == null || !player.activeSelf)
+			return;
 		if (fireType == eFireType.eNormalFireType) {
 			GameObject bulletObj = Instantiate (bullet, firePos.position, firePos.rotation);
 			bulletObj.GetComponent<BulletCtrl> ().AddForce = true;

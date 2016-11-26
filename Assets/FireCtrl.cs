@@ -7,6 +7,7 @@ public class FireCtrl : MonoBehaviour {
 	public Transform firePos;
 	// Use this for initialization
 	public float fireTerm = 0.3f;
+	public float scaleFactor = 1.0f;
 
 	private LaserBeam laser = null;
 	public bool stopFire {
@@ -49,6 +50,8 @@ public class FireCtrl : MonoBehaviour {
 	{
 		GameObject bulletObj = Instantiate (bullet, firePos.position, firePos.rotation);
 		bulletObj.GetComponent<BulletCtrl> ().AddForce = true;
+		bulletObj.GetComponent<BulletCtrl> ().scaleFactor = scaleFactor;
+		bulletObj.transform.localScale = new Vector3 (scaleFactor, scaleFactor, scaleFactor);
 	}
 
 	public void FireLaserBeam()
