@@ -420,7 +420,7 @@ public class EnemyScript : MonoBehaviour {
 			GameObject bossObj = GameObject.FindWithTag("BOSS");
 			if(bossObj != null)
 				vCenterOfMass = bossObj.transform.position;
-			Debug.Log ("vCenterOfMass " + vCenterOfMass.ToString () + " neighborCount : " + neighborCount);
+			//Debug.Log ("vCenterOfMass " + vCenterOfMass.ToString () + " neighborCount : " + neighborCount);
 
 			//seek for vCenterOfMass;
 			vSteeringForce = Seek (vCenterOfMass);
