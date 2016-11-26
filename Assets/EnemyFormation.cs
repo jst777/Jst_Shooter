@@ -9,10 +9,23 @@ public class EnemyFormation : MonoBehaviour {
 		ePyramidFormation,
 		eArchFormation,
 		eHakikFormation,
+		eCarrierFormation,
 		eMaxFormation
 	}
-
+	public enum eCarrierAction
+	{
+		eCarrierSeperation,
+		eCarrierDashToPlayer,
+		//eCarrierReturn,
+		//eCarrierAlignment,
+		eCarrierCohesion,
+		eCarrierActionMax,
+	}
+		
 	public eFormation formation = eFormation.ePyramidFormation;
+	public eCarrierAction carrierAction = eCarrierAction.eCarrierSeperation;
+
+	public bool spearationAngleSet = false;
 
 	// Use this for initialization
 	void Start () {
