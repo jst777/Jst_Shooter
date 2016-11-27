@@ -20,6 +20,7 @@ public class EnemyFire : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		//return;
 		StartCoroutine (FireCoroutine());
 		fireType = eFireType.eCircleType;
 		if (Camera.main != null) {

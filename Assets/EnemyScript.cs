@@ -47,7 +47,7 @@ public class EnemyScript : MonoBehaviour {
 		//destinationIndex = 3;
 		//Debug.Log("Points Index = " + startIndex.ToString() + "," + destinationIndex.ToString());
 
-		Speed = 1.0f;
+		Speed = 20.0f;
 
 		healthBar = GetComponent<HealthBar> ();
 
@@ -76,7 +76,7 @@ public class EnemyScript : MonoBehaviour {
 			//if (healthBar != null) {
 			//	healthBar.maxHealth = healthBar.currHealth = 5;
 			//}
-			Speed = 2.0f;
+			Speed*= 2.0f;
 			transform.localScale = new Vector3 (1.5f, 1.5f, 1.5f);
 		}
 		transform.position = spawnpoints[startIndex].position;
@@ -156,15 +156,22 @@ public class EnemyScript : MonoBehaviour {
 						OffsetPursuit (bossObj, vOffsetToBoss);
 					else {
 						float fDistanceToBoss = Vector3.Distance (transform.position, bossObj.transform.position);
-
-						if (enemyformation.carrierAction == EnemyFormation.eCarrierAction.eCarrierSeperation) {
-							if (fDistanceToBoss < 5)
+						//if (name == "Monster_1") {
+						//	Debug.Log ("formation" + enemyformation.carrierAction.ToString ());
+						//}
+						if (enemyformation.carrierAction == EnemyFormation.eCarrierAction.eCarrierActionMax) {
+							enemyformation.carrierAction = EnemyFormation.eCarrierAction.eCarrierCohesion;
+						}
+						else if (enemyformation.carrierAction == EnemyFormation.eCarrierAction.eCarrierSeperation) {
+							
+							if (fDistanceToBoss <= 5)
 								Seperation ();
 							else {
 								enemyformation.spearationAngleSet = false;
 								enemyformation.carrierAction = EnemyFormation.eCarrierAction.eCarrierDashToPlayer;
-								GetComponent<EnemyState>().enemyState = EnemyState.eEnemyState.eNormalState;
+								GetComponent<EnemyState> ().enemyState = EnemyState.eEnemyState.eNormalState;
 							}
+
 						}
 						else if (enemyformation.carrierAction == EnemyFormation.eCarrierAction.eCarrierDashToPlayer) {
 							GameObject player = GameObject.Find ("Player");
@@ -180,7 +187,7 @@ public class EnemyScript : MonoBehaviour {
 							}
 						} 
 						else if (enemyformation.carrierAction == EnemyFormation.eCarrierAction.eCarrierCohesion) {
-							if(fDistanceToBoss > 2)
+							if(fDistanceToBoss > 5)
 								Cohesion ();
 							else{
 								enemyformation.carrierAction = EnemyFormation.eCarrierAction.eCarrierSeperation;
@@ -288,7 +295,7 @@ public class EnemyScript : MonoBehaviour {
 			Vector3 newPosition = transform.position + (desiredVelocity - Velocity);
 
 			//twisting because of this... (next time todo)
-			transform.position = Vector3.Slerp (transform.position, newPosition, Time.deltaTime * 10);
+			transform.position = Vector3.Slerp (transform.position, newPosition, Time.deltaTime);// * 10);
 
 			Quaternion a = new Quaternion ();
 			Quaternion b = new Quaternion ();
@@ -313,9 +320,21 @@ public class EnemyScript : MonoBehaviour {
 							monsterIndex = monsterCount;
 						}
 						monsterCount++;
-
 					}
 				}
+				if(gameMgrRef != null)
+					monsterCount = gameMgrRef.maxMonster;
+
+				string[] splitString = name.Split(new string[] { "_", "\n"}, System.StringSplitOptions.None);
+
+				if (splitString.Length >= 2 && GetComponent<EnemyScript> ().isSetPos == false) {
+					int idx = 0;
+					//Debug.Log ("splitString.length" + splitString.Length.ToString() + splitString[1].ToString());		
+					if (int.TryParse (splitString [1], out idx)) {
+						monsterIndex =  idx;
+					}
+				}
+
 
 				float theta = 180 / monsterCount;
 				float rad_step = Mathf.PI / 180 * theta;
@@ -357,7 +376,7 @@ public class EnemyScript : MonoBehaviour {
 				}
 			}
 			*/
-			vSteeringForce = transform.forward * Speed;
+			vSteeringForce = transform.forward * Speed * Time.deltaTime;
 			transform.position += vSteeringForce;
 		}
 	}
@@ -383,7 +402,7 @@ public class EnemyScript : MonoBehaviour {
 
 	Vector3 Seek(Vector3 vTargetPos){
 		Vector3 vDesiredVelocity = vTargetPos - transform.position;
-		vDesiredVelocity = vDesiredVelocity.normalized * Speed; //velocity
+		vDesiredVelocity = vDesiredVelocity.normalized * Speed * Time.deltaTime; //velocity
 		vDesiredVelocity.y = 0;
 		return vDesiredVelocity;
 	}
