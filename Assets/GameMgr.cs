@@ -130,6 +130,7 @@ public class GameMgr : MonoBehaviour {
 		int destPos = random;
 		Random.InitState ((int)System.DateTime.Now.Ticks);
 		float randomFormation = Random.Range (0, (float)EnemyFormation.eFormation.eMaxFormation);
+
 		//randomFormation = (float)EnemyFormation.eFormation.eCarrierFormation;
 		//randomFormation = (float)EnemyFormation.eFormation.eArchFormation; //strange
 		//randomFormation = (float)EnemyFormation.eFormation.eHakikFormation;

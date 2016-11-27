@@ -20,17 +20,25 @@ public class EnemyFire : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		//return;
-		StartCoroutine (FireCoroutine());
+		
 		fireType = eFireType.eCircleType;
 		if (Camera.main != null) {
-			
 			GameMgr gamemgr = Camera.main.GetComponent<GameMgr> ();
 			if (gamemgr != null) {
 				int fireTypeInt = (gamemgr.currentStage - 1) % (int)eFireType.eMaxFireType;
 				fireType = (eFireType)fireTypeInt;
 			}
 		}
+
+		if(tag != "BOSS"){
+			if(GetComponent<EnemyFormation>().formation == EnemyFormation.eFormation.eCarrierFormation)
+			{
+				fireType = eFireType.eNormalFireType;
+				return;
+			}
+		}
+		StartCoroutine (FireCoroutine());
+
 	}
 	
 	// Update is called once per frame

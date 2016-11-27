@@ -17,6 +17,7 @@ public class FireCtrl : MonoBehaviour {
 	}
 
 	void Start () {
+		
 		//return;
 		StartCoroutine (FireCoroutine());
 		 laser = GetComponentInChildren<LaserBeam> ();

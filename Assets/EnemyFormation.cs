@@ -23,13 +23,17 @@ public class EnemyFormation : MonoBehaviour {
 	}
 		
 	public eFormation formation = eFormation.ePyramidFormation;
-	public eCarrierAction carrierAction = eCarrierAction.eCarrierSeperation;
+	//public eCarrierAction carrierAction = eCarrierAction.eCarrierSeperation;
+	//public eCarrierAction carrierAction = eCarrierAction.eCarrierActionMax;
+	public eCarrierAction carrierAction = eCarrierAction.eCarrierCohesion;
+
 
 	public bool spearationAngleSet = false;
 
 	// Use this for initialization
 	void Start () {
 		CalculateOffsetPos ();
+		carrierAction = eCarrierAction.eCarrierCohesion;
 	}
 	
 	// Update is called once per frame

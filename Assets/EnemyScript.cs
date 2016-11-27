@@ -156,6 +156,7 @@ public class EnemyScript : MonoBehaviour {
 						OffsetPursuit (bossObj, vOffsetToBoss);
 					else {
 						float fDistanceToBoss = Vector3.Distance (transform.position, bossObj.transform.position);
+
 						//if (name == "Monster_1") {
 						//	Debug.Log ("formation" + enemyformation.carrierAction.ToString ());
 						//}
@@ -164,7 +165,7 @@ public class EnemyScript : MonoBehaviour {
 						}
 						else if (enemyformation.carrierAction == EnemyFormation.eCarrierAction.eCarrierSeperation) {
 							
-							if (fDistanceToBoss <= 5)
+							if (fDistanceToBoss <= 5)// || !enemyformation.spearationAngleSet)
 								Seperation ();
 							else {
 								enemyformation.spearationAngleSet = false;
@@ -183,14 +184,18 @@ public class EnemyScript : MonoBehaviour {
 									DashToPlayer ();
 								else{
 									enemyformation.carrierAction = EnemyFormation.eCarrierAction.eCarrierCohesion;
+									GetComponent<EnemyFire> ().Fire ();
 								}
 							}
 						} 
 						else if (enemyformation.carrierAction == EnemyFormation.eCarrierAction.eCarrierCohesion) {
-							if(fDistanceToBoss > 5)
+							if(fDistanceToBoss >2)// 5)
 								Cohesion ();
 							else{
 								enemyformation.carrierAction = EnemyFormation.eCarrierAction.eCarrierSeperation;
+								if (name == "Monster_1") {
+									Debug.Log ("formation changed cohesion to seperation");
+								}
 							}
 						}
 
@@ -327,7 +332,7 @@ public class EnemyScript : MonoBehaviour {
 
 				string[] splitString = name.Split(new string[] { "_", "\n"}, System.StringSplitOptions.None);
 
-				if (splitString.Length >= 2 && GetComponent<EnemyScript> ().isSetPos == false) {
+				if (splitString.Length >= 2) {
 					int idx = 0;
 					//Debug.Log ("splitString.length" + splitString.Length.ToString() + splitString[1].ToString());		
 					if (int.TryParse (splitString [1], out idx)) {
@@ -351,7 +356,7 @@ public class EnemyScript : MonoBehaviour {
 				float s = Mathf.Sin (rad);
 
 				//GameObject bulletObj = Instantiate (bullet, fireTransform.position, fireTransform.rotation);
-				Vector3 velocity = transform.forward;//firePos.forward;
+				Vector3 velocity = new Vector3(0,0,1);//transform.forward;//firePos.forward;
 				velocity.x = transform.forward.x * c - transform.forward.z * s;
 				velocity.z = transform.forward.x * s + transform.forward.z * c;
 				velocity.y = 0;//transform.position.y;
