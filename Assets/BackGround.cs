@@ -14,7 +14,7 @@ public class BackGround : MonoBehaviour {
 			GameObject bg = GameObject.Find ("BackGround");
 			if (bg != null) {
 				MeshRenderer meshRender = GetComponent<MeshRenderer> ();
-				Debug.Log ("BackGround script " + meshRender.ToString());
+				//Debug.Log ("BackGround script " + meshRender.ToString());
 				if (meshRender != null) {
 					if (meshRender.materials.Length > 0) {
 						meshRender.materials [0].mainTexture = texture;

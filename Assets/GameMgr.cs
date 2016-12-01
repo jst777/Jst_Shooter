@@ -99,9 +99,20 @@ public class GameMgr : MonoBehaviour {
 					if(player!= null)
 					{
 						player.GetComponent<FireCtrl> ().stopFire = true;
-					}
-							
+						//lock move and camera
+						player.GetComponent<Move> ().enabled = false;
+						//lock collision
+						player.GetComponent<PlayerCtrl> ().enabled = false;
 
+						GameObject gamepointpanel = GameObject.Find ("GamePointPanel");
+						if (gamepointpanel != null) {
+							int addedGamePoint = 0;
+							addedGamePoint = maxMonster;
+
+
+							gamepointpanel.GetComponent<GamePoint> ().AddGamePoint (addedGamePoint);
+						}
+					}
 				}
 			}
 		}
