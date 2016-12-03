@@ -10,14 +10,26 @@ public class MainMenuUI : MonoBehaviour {
 	public Text	chatText;
 
 
+	public Text Login_Label = null;
+	public Text User_Label = null;
+	//public UITexture User_Texture = null;
+
 	// Use this for initialization
 	void Start () {
-		
+		GPGSMng.GetInstance().InitializeGPGS();
+
+		if(GPGSMng.GetInstance().bLogin == false)
+		{
+			//GPGSMng.GetInstance().LoginGPGS(); // 로그인
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		//if (GPGSMng.GetInstance().bLogin == true) 
+		{
+			SettingUser ();
+		}
 	}
 
 	public void OnClickStartButton(){
@@ -56,15 +68,31 @@ public class MainMenuUI : MonoBehaviour {
 
 	public void OnClickChatButton()
 	{
-		ServerManager mgr = Camera.main.GetComponent<ServerManager> ();
-		mgr.EmitChat ("jst", chatInputField.text, System.DateTime.Now);
+		//ServerManager mgr = Camera.main.GetComponent<ServerManager> ();
+		//mgr.EmitChat ("jst", chatInputField.text, System.DateTime.Now);
 
-		//chatText.text += chatInputField.text + "\n";
-		//chatText.text = "hello \n hi \n hello there \n";
+		if (GPGSMng.GetInstance ().bLogin == false) {
+			GPGSMng.GetInstance ().LoginGPGS (); // 로그인
+		} else {
+			GPGSMng.GetInstance ().LogoutGPGS (); // 로그인
+		}
 	}
 
 	public void AddChatText(string name, string msg, string date)
 	{
 		chatText.text += "[" + name + "]  "  + msg + "\n";
+	}
+
+	void SettingUser()
+	{
+		//if (User_Texture.mainTexture != null)
+		//if(User_Label!= null)//.text != null)
+		//	return;
+
+		User_Label.enabled = true;
+		//User_Texture.enabled = true;
+
+		User_Label.text = "name=" + GPGSMng.GetInstance().GetNameGPGS();
+		//User_Texture.mainTexture = GPGSMng.GetInstance.GetImageGPGS();
 	}
 }

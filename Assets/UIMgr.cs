@@ -25,13 +25,6 @@ public class UIMgr : MonoBehaviour {
 
 	public List<string> buttonList;
 
-	public bool topMove { get; set; }
-	public bool bottomMove { get; set; }
-	public bool leftMove { get; set; }
-	public bool rightMove { get; set; }
-	public bool leftRotate { get; set; }
-	public bool rightRotate { get; set; }
-
 
 	//
 	public GameObject gameOver;
@@ -72,89 +65,10 @@ public class UIMgr : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-		float xx = 0.0f;
-		float zz = 0.0f;
-
-
-		if (leftRotate) {
-			playerObject.transform.Rotate (-1 * Vector3.up * Time.deltaTime * 100, Space.World);
-		} else if (rightRotate) {
-			playerObject.transform.Rotate(Vector3.up * Time.deltaTime * 100, Space.World);
-		}
-
-		if (topMove || bottomMove || leftMove || rightMove) {
-			if (topMove) {
-				xx = 1.0f;
-			} else if (bottomMove) {
-				xx = -1.0f;
-			}
-			if (leftMove) {
-				zz = -1.0f;
-			} else if (rightMove) {
-				zz = 1.0f;
-			}
-			Vector3 lookDir = playerObject.transform.forward * xx + zz * playerObject.transform.right;//xx * Vector3.forward + zz * Vector3.right;
-
-			playerObject.transform.position += (lookDir.normalized * 5 * Time.deltaTime);
-			Debug.Log (playerObject.transform.position.ToString ());
-		}
 
 	}
 
-	public void OnPointerDownTopArrow()
-	{
-		topMove = true;
-		//Debug.Log ("OnPointerDownTopArrow");
-	}
-	public void OnPointerUpTopArrow()
-	{
-		topMove = false;
-		//Debug.Log ("OnPointerUpTopArrow");
-	}
 
-	public void OnPointerDownBottomArrow()
-	{
-		bottomMove = true;
-	}
-	public void OnPointerUpBottomArrow()
-	{
-		bottomMove = false;
-	}
-
-	public void OnPointerDownLeftArrow()
-	{
-		leftMove = true;
-	}
-	public void OnPointerUpLeftArrow()
-	{
-		leftMove = false;
-	}
-	public void OnPointerDownRightArrow()
-	{
-		rightMove = true;
-	}
-	public void OnPointerUpRightArrow()
-	{
-		rightMove = false;
-	}
-
-	public void OnPointerDownLeftRotate()
-	{
-		leftRotate = true;
-	}
-	public void OnPointerUpLeftRotate()
-	{
-		leftRotate = false;
-	}
-	public void OnPointerDownRightRotate()
-	{
-		rightRotate = true;
-	}
-	public void OnPointerUpRightRotate()
-	{
-		rightRotate = false;
-	}
 
 	public void OnGameRetryButton()
 	{
