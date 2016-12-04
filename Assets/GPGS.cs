@@ -4,6 +4,10 @@ using GooglePlayGames;
 using GooglePlayGames.BasicApi.SavedGame;
 using System;
 using GooglePlayGames.BasicApi;
+
+using UnityEngine.SocialPlatforms;
+
+
 /*
 public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
@@ -48,8 +52,13 @@ public class GPGSMng// : Singleton<GPGSMng>
 		if(instance == null)
 		{
 			instance = new GPGSMng();
+			instance.InitializeGPGS ();
 		}
 		return instance;
+	}
+
+	public void OnTouch()
+	{
 	}
 
 	/// <summary>
@@ -120,5 +129,36 @@ public class GPGSMng// : Singleton<GPGSMng>
 		else
 			return "nonauthenticated";
 			//return null;
+
 	}
+
+	public void ReportScore(int highScore)
+	{
+		if (Social.localUser.authenticated) {
+			//lambda
+			Social.ReportScore (highScore, "CgkIx4Xil-YYEAIQCQ", (bool suc) => { 
+				if (suc)
+				{
+					//실제 랭킹은 어디서 보나
+					//PlayGamesPlatform.Instance.ShowLeaderboardUI("CgkIx4Xil-YYEAIQCQ");//ScoreBoard");
+				}
+			});
+		}
+	}
+
+	public void LoadScores()
+	{
+		Social.LoadScores("CgkIx4Xil-YYEAIQCQ", scores => {
+			if (scores.Length > 0) {
+				Debug.Log ("Got " + scores.Length + " scores");
+				string myScores = "Leaderboard:\n";
+				foreach (IScore score in scores)
+					myScores += "\t" + score.userID + " " + score.formattedValue + " " + score.date + "\n";
+				Debug.Log (myScores);
+			}
+			else
+				Debug.Log ("No scores loaded");
+		});
+	}
+
 }

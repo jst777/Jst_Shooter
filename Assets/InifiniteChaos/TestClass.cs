@@ -27,6 +27,7 @@ public static class TestClass
 {
         public const string achievement_laserbeamuse = "CgkIx4Xil-YYEAIQBA"; // <GPGSID>
         public const string achievement_shipupgraded = "CgkIx4Xil-YYEAIQAg"; // <GPGSID>
+        public const string leaderboard_scoreboard = "CgkIx4Xil-YYEAIQCQ"; // <GPGSID>
         public const string achievement_buydefenderfellow = "CgkIx4Xil-YYEAIQBQ"; // <GPGSID>
         public const string achievement_stageclear = "CgkIx4Xil-YYEAIQAA"; // <GPGSID>
         public const string achievement_fellowadded = "CgkIx4Xil-YYEAIQAQ"; // <GPGSID>

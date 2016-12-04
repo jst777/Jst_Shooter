@@ -16,7 +16,7 @@ public class MainMenuUI : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		GPGSMng.GetInstance().InitializeGPGS();
+		GPGSMng.GetInstance ().OnTouch ();//InitializeGPGS();
 
 		if(GPGSMng.GetInstance().bLogin == false)
 		{
@@ -55,10 +55,11 @@ public class MainMenuUI : MonoBehaviour {
 		SceneManager.LoadScene ("JstScene");
 	}
 
-	public void OnClickResetStageButton()
+	public void OnClickRankButton()
 	{
-		PlayerPrefs.SetInt ("STAGE_COUNT", 1);
-		SceneManager.LoadScene ("JstScene");
+		//PlayerPrefs.SetInt ("STAGE_COUNT", 1);
+		//SceneManager.LoadScene ("JstScene");
+		SceneManager.LoadScene ("Rank");
 	}
 
 	public void OnClickShopButton()

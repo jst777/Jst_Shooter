@@ -84,8 +84,8 @@ public class FellowShop : MonoBehaviour {
 
 	public void OnClickMainMenuButton()
 	{
-		ShopCost shopCost = GameObject.Find ("BuyButton1").GetComponentInChildren<ShopCost> ();
-		GameObject.Find ("GamePointPanel").GetComponentInChildren<GamePoint> ().SpendGamePoint (shopCost.cost);
+		//ShopCost shopCost = GameObject.Find ("BuyButton1").GetComponentInChildren<ShopCost> ();
+		//GameObject.Find ("GamePointPanel").GetComponentInChildren<GamePoint> ().SpendGamePoint (shopCost.cost);
 
 		SceneManager.LoadScene ("MainMenuScene");
 	}
