@@ -10,7 +10,7 @@ using GooglePlayGames.BasicApi;
 using UnityEngine.SocialPlatforms;
 
 public class RankSceneScript : MonoBehaviour {
-
+	Dictionary<string, IScore> dictionaryScore = new Dictionary<string, IScore>();
 	// Use this for initialization
 	void Start () {
 		LoadScores ();	
@@ -37,25 +37,62 @@ public class RankSceneScript : MonoBehaviour {
 			myScores += "authenticated\n";
 			//Social.LoadScores ("CgkIx4Xil-YYEAIQCQ", scores => {
 			//var lb =  Social.CreateLeaderboard();
-			PlayGamesPlatform.Instance.LoadScores("CgkIx4Xil-YYEAIQCQ", LeaderboardStart.TopScores, 1, 
-				LeaderboardCollection.Public, LeaderboardTimeSpan.AllTime, (data) => {
+			//daily는 최신 alltime은 아닌듯
+			PlayGamesPlatform.Instance.LoadScores("CgkIx4Xil-YYEAIQCQ", LeaderboardStart.PlayerCentered, 20, 
+				LeaderboardCollection.Public, LeaderboardTimeSpan.Weekly, (data) => {
 					myScores += "CallBack called\n";
 					if (data.Scores.Length > 0) {
-						Debug.Log ("Got " + data.Scores.Length + " scores");
-					//myScores += "playerCount" + scores.Length.ToString();
-						foreach (IScore score in data.Scores)
-						myScores += "\t" + score.userID + " " + score.formattedValue + " " + score.date + "\n";
-					//Debug.Log (myScores);
-
+						
+						SetScores(data.Scores);
 
 				} else
+					{
 					myScores += "NoScores Loaded";
 					//Debug.Log ("No scores loaded");
+
+						GameObject.Find ("Canvas").GetComponentInChildren<Text> ().text = myScores;
+					}
 			});
 		} else {
 			myScores = "Noauthenticated\n";
+
+			GameObject.Find ("Canvas").GetComponentInChildren<Text> ().text = myScores;
+		}
+	}
+
+	public void SetScores(IScore[] scores)
+	{
+		//string myScores = "Leaderboard:\n";
+
+		string[] userID = new string[scores.Length];
+		int index = 0;
+		foreach (IScore score in scores) {
+			userID [index] = score.userID;
+			dictionaryScore [score.userID] = score;
+			//myScores += "\t" + "[" + score.rank + "] "  + score.userID + " " + score.formattedValue + " " + score.date + "\n";
+
+			index++;
 		}
 
+
+		PlayGamesPlatform.Instance.LoadUsers (userID, (users) => {
+			SetUsers (users);
+		});
+
+	
+		//GameObject.Find ("Canvas").GetComponentInChildren<Text> ().text = myScores;
+	}
+
+	public void SetUsers(IUserProfile[] userProfiles)
+	{
+		string myScores = "Leaderboard:\n";
+		foreach (IUserProfile userprofile in userProfiles) {
+			if(dictionaryScore.ContainsKey(userprofile.id)){
+				IScore score = dictionaryScore[userprofile.id];
+				myScores += "\t" + "[" + score.rank + "] "  +userprofile.userName + " " + score.formattedValue + " " + score.date + "\n";
+				//myScores += userprofile.userName;
+			}
+		}
 		GameObject.Find ("Canvas").GetComponentInChildren<Text> ().text = myScores;
 	}
 
