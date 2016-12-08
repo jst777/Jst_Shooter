@@ -113,7 +113,7 @@ public class GameMgr : MonoBehaviour {
 							gamepointpanel.GetComponent<GamePoint> ().AddGamePoint (addedGamePoint);
 
 							//일단 게임포인트와 동일
-							GPGSMng.GetInstance().ReportScore(maxMonster);
+							GPGSMng.GetInstance().ReportScore(currentStage);
 						}
 					}
 				}

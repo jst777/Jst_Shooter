@@ -38,8 +38,8 @@ public class RankSceneScript : MonoBehaviour {
 			//Social.LoadScores ("CgkIx4Xil-YYEAIQCQ", scores => {
 			//var lb =  Social.CreateLeaderboard();
 			//daily는 최신 alltime은 아닌듯
-			PlayGamesPlatform.Instance.LoadScores("CgkIx4Xil-YYEAIQCQ", LeaderboardStart.PlayerCentered, 20, 
-				LeaderboardCollection.Public, LeaderboardTimeSpan.Weekly, (data) => {
+			PlayGamesPlatform.Instance.LoadScores("CgkIx4Xil-YYEAIQCw", LeaderboardStart.PlayerCentered, 20, 
+				LeaderboardCollection.Public, LeaderboardTimeSpan.AllTime, (data) => {
 					myScores += "CallBack called\n";
 					if (data.Scores.Length > 0) {
 						
@@ -99,7 +99,7 @@ public class RankSceneScript : MonoBehaviour {
 	public void OnClickRankButton()
 	{
 		if (Social.localUser.authenticated) {
-			PlayGamesPlatform.Instance.ShowLeaderboardUI("CgkIx4Xil-YYEAIQCQ");//ScoreBoard");
+			PlayGamesPlatform.Instance.ShowLeaderboardUI("CgkIx4Xil-YYEAIQCw");//ScoreBoard");
 		}
 	}
 }

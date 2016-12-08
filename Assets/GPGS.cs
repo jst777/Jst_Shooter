@@ -69,6 +69,8 @@ public class GPGSMng// : Singleton<GPGSMng>
 		bLogin = false;
 
 		PlayGamesPlatform.Activate();
+
+		LoginGPGS ();
 	}
 
 	/// <summary>
@@ -136,7 +138,7 @@ public class GPGSMng// : Singleton<GPGSMng>
 	{
 		if (Social.localUser.authenticated) {
 			//lambda
-			Social.ReportScore (highScore, "CgkIx4Xil-YYEAIQCQ", (bool suc) => { 
+			PlayGamesPlatform.Instance.ReportScore(highScore, "CgkIx4Xil-YYEAIQCw", (bool suc) => { 
 				if (suc)
 				{
 					//실제 랭킹은 어디서 보나
@@ -144,11 +146,12 @@ public class GPGSMng// : Singleton<GPGSMng>
 				}
 			});
 		}
+
 	}
 
 	public void LoadScores()
 	{
-		Social.LoadScores("CgkIx4Xil-YYEAIQCQ", scores => {
+		Social.LoadScores("CgkIx4Xil-YYEAIQCw", scores => {
 			if (scores.Length > 0) {
 				Debug.Log ("Got " + scores.Length + " scores");
 				string myScores = "Leaderboard:\n";
