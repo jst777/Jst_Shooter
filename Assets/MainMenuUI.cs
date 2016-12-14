@@ -34,13 +34,7 @@ public class MainMenuUI : MonoBehaviour {
 
 	public void OnClickStartButton(){
 		//file DB 
-		/*
-		GameMgr gameMgr = GameObject.Find ("Camera").GetComponent<GameMgr> ();
-		if (gameMgr) {
-			PlayerPrefs.SetInt ("COLUM_COUNT", ++gameMgr.columnCount);
-			PlayerPrefs.SetInt ("STAGE_COUNT", ++gameMgr.currentStage);
-		}
-		*/
+
 
 		SceneManager.LoadScene ("JstScene");
 	}

@@ -12,12 +12,12 @@ public class GameMgr : MonoBehaviour {
 
 	public float creationTime = 2.0f;
 	//private int maxMonster = 1;
-	public int columnCount = 3;
+	//public int columnCount = 3;
 	public bool isGameOver = false;
 	public int goalStep = 3;
-	public int currentStep{
-		get;set;
-	}
+	//public int currentStep{
+	//	get;set;
+	//}
 
 	public int currentStage = 1;// {
 	//	get;
@@ -34,33 +34,35 @@ public class GameMgr : MonoBehaviour {
 	void Awake()
 	{
 		instance = this;
-		maxMonster = columnCount * (columnCount - 1);
-
+		//maxMonster = columnCount * (columnCount - 1);
 	}
 
 	// Use this for initialization
 	void Start () {
 		spawnPoints = GameObject.Find ("SpawnPoint").GetComponentsInChildren<Transform> ();
 		destPoints = GameObject.Find ("DestinationPoint").GetComponentsInChildren<Transform> ();
-		currentStep = 1;
 
-
-		int columnCountPref = PlayerPrefs.GetInt ("COLUM_COUNT");
-		if (columnCountPref > 0) {
-			columnCount = columnCountPref;
+		currentStage = 1;
+		int stageCountRef = PlayerPrefs.GetInt ("STAGE_COUNT");
+		if (stageCountRef > 0) {
+			currentStage = stageCountRef;
 		}
 
-			currentStage = 1;
-			int stageCountRef = PlayerPrefs.GetInt ("STAGE_COUNT");
-			if (stageCountRef > 0) {
-				currentStage = stageCountRef;
-			}
-		
-		int checkStage = currentStage / (int)EnemyFire.eFireType.eMaxFireType;
-		currentStep = 1;
-		columnCount = 1 + checkStage;
+		CalculateMonsterCount ();
 
 		RespawnNextMonster ();
+	}
+
+	void CalculateMonsterCount()
+	{
+		//스테이지 변수 갯수
+		int variableCount = (int)EnemyFire.eFireType.eMaxFireType * (int)EnemyFormation.eFormation.eMaxFormation;
+		int checkStage = currentStage / variableCount;
+		//columnCount = 1 + checkStage;
+		//boss와 부하2마리부터 시작
+		maxMonster = 3;
+		maxMonster += (checkStage * 2); //2마리씩 늘어남
+
 	}
 
 	public void UpdateScore()
@@ -74,9 +76,10 @@ public class GameMgr : MonoBehaviour {
 			}
 		}
 
-		if (currentStep < goalStep)
-			RespawnNextMonster ();
-		else { //game over
+		//if (currentStep < goalStep)
+		//	RespawnNextMonster ();
+		//else 
+		{ //game over
 			GameObject uiMgrobj = GameObject.Find ("UIManager");
 			if (uiMgrobj != null) {
 				UIMgr uiMgr = uiMgrobj.GetComponentInChildren<UIMgr> ();
@@ -89,6 +92,10 @@ public class GameMgr : MonoBehaviour {
 					}
 					uiMgr.stageClear.SetActive (true);
 
+					GameObject unityAdsPanel = GameObject.Find ("UnityAdsPanel");
+					if (unityAdsPanel != null) {
+						unityAdsPanel.GetComponent<UnityAdsCtrl> ().Show (true);
+					}
 
 					CameraControl camControl = Camera.main.GetComponent<CameraControl> ();
 					if (camControl != null) {
@@ -123,13 +130,6 @@ public class GameMgr : MonoBehaviour {
 
 	public void RespawnNextMonster()
 	{
-		//factorial 증
-		columnCount++;
-		currentStep++;
-		maxMonster = 0;
-		for (int i = 0; i < columnCount; i++) {
-			maxMonster += i;
-		}
 
 		monsterPool.Clear ();
 
@@ -144,6 +144,8 @@ public class GameMgr : MonoBehaviour {
 		int destPos = random;
 		Random.InitState ((int)System.DateTime.Now.Ticks);
 		float randomFormation = Random.Range (0, (float)EnemyFormation.eFormation.eMaxFormation);
+
+		randomFormation = (currentStage - 1) / (int)EnemyFire.eFireType.eMaxFireType;
 
 		//randomFormation = (float)EnemyFormation.eFormation.eCarrierFormation;
 		//randomFormation = (float)EnemyFormation.eFormation.eArchFormation; //strange

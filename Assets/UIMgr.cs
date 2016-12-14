@@ -86,7 +86,7 @@ public class UIMgr : MonoBehaviour {
 		//file DB 
 		GameMgr gameMgr = GameObject.Find ("Camera").GetComponent<GameMgr> ();
 		if (gameMgr) {
-			PlayerPrefs.SetInt ("COLUM_COUNT", ++gameMgr.columnCount);
+			//PlayerPrefs.SetInt ("COLUM_COUNT", ++gameMgr.columnCount);
 			PlayerPrefs.SetInt ("STAGE_COUNT", ++gameMgr.currentStage);
 		}
 
