@@ -22,19 +22,22 @@ public class EnemyFire : MonoBehaviour {
 	void Start () {
 		
 		fireType = eFireType.eCircleType;
-		if (Camera.main != null) {
-			GameMgr gamemgr = Camera.main.GetComponent<GameMgr> ();
-			if (gamemgr != null) {
-				int fireTypeInt = (gamemgr.currentStage - 1) % (int)eFireType.eMaxFireType;
-				fireType = (eFireType)fireTypeInt;
+		//if (tag == "Turret")
+		{
+			if (Camera.main != null) {
+				GameMgr gamemgr = Camera.main.GetComponent<GameMgr> ();
+				if (gamemgr != null) {
+					int fireTypeInt = (gamemgr.currentStage - 1) % (int)eFireType.eMaxFireType;
+					fireType = (eFireType)fireTypeInt;
+				}
 			}
 		}
-
 		if(tag != "BOSS"){
-			if(GetComponent<EnemyFormation>().formation == EnemyFormation.eFormation.eCarrierFormation)
-			{
-				fireType = eFireType.eNormalFireType;
-				return;
+			if (GetComponent<EnemyFormation> () != null) {
+				if (GetComponent<EnemyFormation> ().formation == EnemyFormation.eFormation.eCarrierFormation) {
+					fireType = eFireType.eNormalFireType;
+					return;
+				}
 			}
 		}
 		StartCoroutine (FireCoroutine());
@@ -66,12 +69,15 @@ public class EnemyFire : MonoBehaviour {
 	}
 	void CreateBullet()
 	{
+		Debug.Log ("EnemyFire");
 		GameObject player = GameObject.Find ("Player");
 		if (player == null || !player.activeSelf)
 			return;
 		if (fireType == eFireType.eNormalFireType) {
 			GameObject bulletObj = Instantiate (bullet, firePos.position, firePos.rotation);
 			bulletObj.GetComponent<BulletCtrl> ().AddForce = true;
+			Vector3 vDir = player.transform.position - firePos.position;
+			bulletObj.transform.forward = vDir.normalized;
 		} else if (fireType == eFireType.eNWayFireType) {
 			float theta = 5;
 			int bulletCount = 10;
@@ -83,6 +89,9 @@ public class EnemyFire : MonoBehaviour {
 			bulletObj.GetComponent<BulletCtrl> ().parentObj = gameObject;
 			bulletObj.GetComponent<BulletCtrl> ().segMentFlag = true;
 			bulletObj.GetComponent<BulletCtrl> ().segmentDistanceFromParent = 7;
+
+			Vector3 vDir = player.transform.position - firePos.position;
+			bulletObj.transform.forward = vDir.normalized;
 		} else if (fireType == eFireType.eCircleType) {
 			int bulletCount = 10;
 			FireCircleType (bulletCount, firePos);
@@ -104,10 +113,15 @@ public class EnemyFire : MonoBehaviour {
 			float s = Mathf.Sin (rad);
 
 			GameObject bulletObj = Instantiate (bullet, fireTransform.position, fireTransform.rotation);
-			Vector3 velocity = transform.forward;//firePos.forward;
-			velocity.x = fireTransform.forward.x * c - fireTransform.forward.z * s;
-			velocity.z = fireTransform.forward.x * s + fireTransform.forward.z * c;
-			velocity.y = fireTransform.position.y;
+			GameObject player = GameObject.Find ("Player");
+			Vector3 vDir = transform.forward;
+			if (player != null) {
+				vDir = player.transform.position - firePos.position;
+			}
+			Vector3 velocity = vDir.normalized;//transform.forward;
+			velocity.x = velocity.x * c - velocity.z * s;
+			velocity.z = velocity.x * s + velocity.z * c;
+			//velocity.y = fireTransform.position.y;
 
 
 			bulletObj.transform.forward = velocity;
@@ -126,11 +140,17 @@ public class EnemyFire : MonoBehaviour {
 
 		for (int i = 0; i < bulletCount; i++, rad += rad_step) {
 			GameObject bulletObj = Instantiate (bullet, firePos.position, fireTransform.rotation);
-			Vector3 velocity = transform.forward;//firePos.forward;
+
+			GameObject player = GameObject.Find ("Player");
+			Vector3 vDir = transform.forward;
+			if (player != null) {
+				vDir = player.transform.position - firePos.position;
+			}
+			Vector3 velocity = vDir.normalized;//transform.forward;
 
 			velocity.x = Mathf.Cos (rad);
 			velocity.z = Mathf.Sin (rad);
-			velocity.y = fireTransform.position.y;
+			//velocity.y = fireTransform.position.y;
 
 
 			bulletObj.transform.forward = velocity;

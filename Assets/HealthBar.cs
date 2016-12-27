@@ -19,17 +19,27 @@ public class HealthBar : MonoBehaviour {
 		if (tag == "Player") {
 			maxHealth = 10;
 			currHealth = 10;
-		} else if (tag == "BOSS") {
-			maxHealth = 5;
-			currHealth = 5;
 		} else if (tag == "Fellow") {
 			maxHealth = 5;
 			currHealth = 5;
+		} else {
+			float levelHPRate = 1;
+			GameMgr gamemgr = Camera.main.GetComponent<GameMgr> ();
+			if (gamemgr != null) {
+				levelHPRate = (gamemgr.currentStage / (int)EnemyFormation.eFormation.eMaxFormation);
+			}
+			if (tag == "BOSS") {
+				maxHealth = 10 + 10 * levelHPRate; 
+				currHealth = 10 + 10 * levelHPRate;
+			} else if (tag == "Turret") {
+				maxHealth = 5 + 5 * levelHPRate; 
+				currHealth = 5 + 5 * levelHPRate;
+			} else if (tag == "Enemy") {
+				maxHealth = 1 + 1 * levelHPRate; 
+				currHealth = 1 + 1 * levelHPRate;
+			}
 		}
-		else {
-			maxHealth = 1;
-			currHealth = 1;
-		}
+
 	}
 
 	// Update is called once per frame

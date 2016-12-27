@@ -8,6 +8,7 @@ public class GameMgr : MonoBehaviour {
 	public Transform[] destPoints;
 
 	public GameObject monsterPrefab;
+	public GameObject bossPrefab;
 	public List<GameObject> monsterPool = new List<GameObject>();
 
 	public float creationTime = 2.0f;
@@ -47,6 +48,8 @@ public class GameMgr : MonoBehaviour {
 		if (stageCountRef > 0) {
 			currentStage = stageCountRef;
 		}
+
+		bossPrefab = (GameObject)Resources.Load ("Prefabs/Enemy_Boss1");
 
 		CalculateMonsterCount ();
 
@@ -145,7 +148,7 @@ public class GameMgr : MonoBehaviour {
 		Random.InitState ((int)System.DateTime.Now.Ticks);
 		float randomFormation = Random.Range (0, (float)EnemyFormation.eFormation.eMaxFormation);
 
-		randomFormation = (currentStage - 1) / (int)EnemyFire.eFireType.eMaxFireType;
+		randomFormation = (currentStage - 1) % (int)EnemyFormation.eFormation.eMaxFormation; /// (int)EnemyFire.eFireType.eMaxFireType;
 
 		//randomFormation = (float)EnemyFormation.eFormation.eCarrierFormation;
 		//randomFormation = (float)EnemyFormation.eFormation.eArchFormation; //strange
@@ -154,7 +157,16 @@ public class GameMgr : MonoBehaviour {
 		//EnemyFormation.eFormation randomFormation = randomFormation;//EnemyFormation.eFormation.eMaxFormation;
 
 		for (int i = 0; i < maxMonster; i++) {
-			GameObject monster = (GameObject)Instantiate (monsterPrefab);
+			GameObject monster;
+			if (i == 0) {
+				if ((EnemyFormation.eFormation)randomFormation == EnemyFormation.eFormation.eCarrierFormation) {
+					monster = (GameObject)Instantiate (bossPrefab);
+				} else {
+					monster = (GameObject)Instantiate (monsterPrefab);
+				}
+			}
+			else
+				monster = (GameObject)Instantiate (monsterPrefab);
 			monster.name = "Monster_" + i.ToString ();
 			if (i == 0) {
 				monster.tag = "BOSS";
@@ -196,6 +208,7 @@ public class GameMgr : MonoBehaviour {
 				monster.SetActive (true);
 
 				HealthBar healthBar = monster.GetComponent<HealthBar> ();
+				/*
 				if(healthBar != null)
 				{
 					if (monster.tag == "BOSS") {
@@ -204,6 +217,7 @@ public class GameMgr : MonoBehaviour {
 						healthBar.maxHealth = healthBar.currHealth = 1;
 					}
 				}
+				*/
 
 				//idx++;
 				break;

@@ -24,8 +24,11 @@ public class PlayerShipSwap : MonoBehaviour {
 		GameObject prefab = (GameObject)Resources.Load ("Space_Jet/Meshes/" + shipName);
 		//if (prefab == null)
 		//	Debug.Log ("Prefab = null");
-		GetComponentInChildren<MeshFilter> ().mesh = prefab.GetComponent<MeshFilter> ().sharedMesh;
-
+		//if (prefab != null) {
+			MeshFilter meshFilter = GetComponentInChildren<MeshFilter> ();
+			if (meshFilter != null)
+				meshFilter.mesh = prefab.GetComponent<MeshFilter> ().sharedMesh;
+		//}
 		float scaleFactor = 1.0f;
 		scaleFactor *= shipIndex;
 
