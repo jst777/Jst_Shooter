@@ -22,13 +22,19 @@ public class EnemyFire : MonoBehaviour {
 	void Start () {
 		
 		fireType = eFireType.eCircleType;
-		//if (tag == "Turret")
 		{
 			if (Camera.main != null) {
 				GameMgr gamemgr = Camera.main.GetComponent<GameMgr> ();
 				if (gamemgr != null) {
 					int fireTypeInt = (gamemgr.currentStage - 1) % (int)eFireType.eMaxFireType;
+					if (tag == "Turret") {
+						fireTypeInt = (gamemgr.currentStage) / (int)eFireType.eMaxFireType -1;
+						if (fireTypeInt >= (int)eFireType.eMaxFireType)
+							fireTypeInt = (int)eFireType.eSegmentType;
+						
+					}
 					fireType = (eFireType)fireTypeInt;
+
 				}
 			}
 		}
@@ -79,8 +85,8 @@ public class EnemyFire : MonoBehaviour {
 			Vector3 vDir = player.transform.position - firePos.position;
 			bulletObj.transform.forward = vDir.normalized;
 		} else if (fireType == eFireType.eNWayFireType) {
-			float theta = 5;
-			int bulletCount = 10;
+			float theta = 10;//5;
+			int bulletCount = 7;//10;
 			FireNWayType (theta, bulletCount, firePos);
 		} else if (fireType == eFireType.eSegmentType) {
 			GameObject bulletObj = Instantiate (bullet, firePos.position, firePos.rotation);

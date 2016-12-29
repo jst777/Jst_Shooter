@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BulletCtrl : MonoBehaviour {
 	public int damage = 20;
-	public float speed = 1000.0f;
+	public float speed = 700.0f;
 
 	public GameObject parentObj = null;
 	public float scaleFactor = 1.0f;
@@ -33,9 +33,10 @@ public class BulletCtrl : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		if(AddForce)
+		if (AddForce) {
+			speed = 700.0f;
 			GetComponent<Rigidbody> ().AddForce (transform.forward * speed);
-
+		}
 		Destroy (gameObject, 5);
 	}
 

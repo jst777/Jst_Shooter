@@ -47,7 +47,7 @@ public class EnemyScript : MonoBehaviour {
 		//destinationIndex = 3;
 		//Debug.Log("Points Index = " + startIndex.ToString() + "," + destinationIndex.ToString());
 
-		Speed = 20.0f;
+		Speed = 15.0f;//20.0f;
 
 		healthBar = GetComponent<HealthBar> ();
 

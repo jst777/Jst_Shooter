@@ -84,7 +84,7 @@ public class EnemyTurretScript : MonoBehaviour {
 				healthBar.currHealth -= 1;
 				if (healthBar.currHealth <= 0) {
 					Instantiate(explosion, transform.position, transform.rotation);
-					Destroy (this);
+					Destroy (this.gameObject);
 				}
 			}
 		}
